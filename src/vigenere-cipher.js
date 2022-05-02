@@ -20,25 +20,19 @@ const { NotImplementedError } = require('../extensions/index.js');
  * 
  */
 class VigenereCipheringMachine {
-  
+
+  constructor(isDirect = true) {
+    this.type = isDirect;
+  }
 
   isLetter (str) {
     return str.length === 1 && str.match(/[a-zA-Z]/i);
   }
 
-  isUpperCase (character) {
-    if (character === character.toUpperCase()) {
-      return true;
-    }
-    if (character === character.toLowerCase()) {
-      return false;
-    }
-  }
-
   encrypt(message, key) {
     //throw new NotImplementedError('Not implemented');
     if (!message || !key) throw new Error('Incorrect arguments!');
-    
+
     let result = '';
     message = message.toUpperCase();
     key = key.toUpperCase();
@@ -53,7 +47,7 @@ class VigenereCipheringMachine {
         }
         //j = ++j % key.length;
       }
-      return result;
+      return this.type ? result : result.split('').reverse().join('');
   }
 
   decrypt(message, key) {
@@ -71,15 +65,15 @@ class VigenereCipheringMachine {
       } else {
         result += c;
       }
-      
     }
-    return result;
+    
+    return this.type ? result : result.split('').reverse().join('');
     }
   }
-    const messageEncrypt = new VigenereCipheringMachine;
+    /*const messageEncrypt = new VigenereCipheringMachine;
     
-    /*encrypt('Hello World!', 'code')*/
-    console.log(messageEncrypt.decrypt('HSVD AJAL ^^', 'behappy'))
+    /*encrypt('Hello World!', 'code')
+    console.log(messageEncrypt.decrypt('HSVD AJAL ^^', 'behappy'))*/
 
 
 
